@@ -49,5 +49,5 @@ jobs:
         with:
           app-name: 'ninja-app-v1'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_E06D2168AE9C4ADABF9789887D84C573 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_ACDCCA14412E4B23B4E46D22C75AC7C6 }}
           package: '*.jar'
