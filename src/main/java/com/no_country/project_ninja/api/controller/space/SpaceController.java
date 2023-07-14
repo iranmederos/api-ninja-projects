@@ -43,6 +43,24 @@ public class SpaceController {
         }
     }
 
+    @GetMapping("main/workspace/{workspaceId}")
+    public ResponseEntity<List<SpaceDTO>> getSpacesMainByWorkspace(@PathVariable Long workspaceId) {
+        Optional<Workspace> workspaceOptional = workspaceRepository.findById(workspaceId);
+
+        if (workspaceOptional.isPresent()) {
+            Workspace workspace = workspaceOptional.get();
+            List<Space> spaces = spaceRepository.findByWorkspace(workspace);
+
+            List<SpaceDTO> spaceDTOs = spaces.stream()
+                    .map(this::mapSpaceMainToDTO)
+                    .collect(Collectors.toList());
+
+            return ResponseEntity.ok(spaceDTOs);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @PostMapping
     public ResponseEntity<SpaceDTO> createSpace(@RequestBody SpaceDTO spaceDTO) {
         Space space = new Space();
@@ -121,5 +139,16 @@ public class SpaceController {
 
         return spaceDTO;
     }
+
+    private SpaceDTO mapSpaceMainToDTO(Space space) {
+        SpaceDTO spaceDTO = new SpaceDTO();
+        spaceDTO.setId(space.getId());
+        spaceDTO.setNameSpace(space.getNameSpace());
+        spaceDTO.setDescription(space.getDescription());
+        spaceDTO.setTasks(space.getTasks());
+
+        return spaceDTO;
+    }
+
 
 }

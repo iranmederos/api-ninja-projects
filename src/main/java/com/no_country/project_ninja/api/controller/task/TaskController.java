@@ -16,6 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -91,6 +94,7 @@ public class TaskController {
     @PutMapping("/{id}")
     public ResponseEntity<TaskDTO> updateTask(@PathVariable Long id, @RequestBody TaskDTO taskDTO) {
         Optional<Task> taskOptional = taskRepository.findById(id);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
         if (taskOptional.isPresent()) {
             Task task = taskOptional.get();
