@@ -24,6 +24,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/task")
+@CrossOrigin()
 public class TaskController {
 
     @Autowired
@@ -33,8 +34,8 @@ public class TaskController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/space/{spaceId}")
-    public ResponseEntity<Page<TaskDTO>> getTasksBySpace(@PathVariable Long spaceId, Pageable pageable) {
+    @GetMapping
+    public ResponseEntity<Page<TaskDTO>> getTasksBySpace(@RequestParam Long spaceId, Pageable pageable) {
         Optional<Space> spaceOptional = spaceRepository.findById(spaceId);
 
         if (spaceOptional.isPresent()) {
@@ -48,8 +49,8 @@ public class TaskController {
     }
 
 
-    @GetMapping("/{id}")
-    public ResponseEntity<TaskDTO> getTaskById(@PathVariable Long id) {
+    @GetMapping
+    public ResponseEntity<TaskDTO> getTaskById(@RequestParam Long id) {
         Optional<Task> taskOptional = taskRepository.findById(id);
 
         if (taskOptional.isPresent()) {
@@ -91,8 +92,8 @@ public class TaskController {
     }
 
 
-    @PutMapping("/{id}")
-    public ResponseEntity<TaskDTO> updateTask(@PathVariable Long id, @RequestBody TaskDTO taskDTO) {
+    @PutMapping
+    public ResponseEntity<TaskDTO> updateTask(@RequestParam Long id, @RequestBody TaskDTO taskDTO) {
         Optional<Task> taskOptional = taskRepository.findById(id);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -112,8 +113,8 @@ public class TaskController {
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteTask(@PathVariable Long id) {
+    @DeleteMapping
+    public ResponseEntity<String> deleteTask(@RequestParam Long id) {
         Optional<Task> taskOptional = taskRepository.findById(id);
 
         if (taskOptional.isPresent()) {
@@ -138,8 +139,8 @@ public class TaskController {
     }
 
 
-    @PostMapping("/{taskId}/users/{userId}")
-    public ResponseEntity<TaskDTO> assignUserToTask(@PathVariable Long taskId, @PathVariable Long userId) {
+    @PostMapping("/users")
+    public ResponseEntity<TaskDTO> assignUserToTask(@RequestParam Long taskId, @RequestParam Long userId) {
         Optional<Task> taskOptional = taskRepository.findById(taskId);
         Optional<User> userOptional = userRepository.findById(userId);
 
@@ -160,8 +161,8 @@ public class TaskController {
         }
     }
 
-    @DeleteMapping("/{taskId}/users/{userId}")
-    public ResponseEntity<TaskDTO> removeUserFromTask(@PathVariable Long taskId, @PathVariable Long userId) {
+    @DeleteMapping("/users")
+    public ResponseEntity<TaskDTO> removeUserFromTask(@RequestParam Long taskId, @RequestParam Long userId) {
         Optional<Task> taskOptional = taskRepository.findById(taskId);
         Optional<User> userOptional = userRepository.findById(userId);
 
