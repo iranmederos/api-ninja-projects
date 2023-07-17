@@ -45,13 +45,13 @@ public class SpaceController {
     }
 
     @PostMapping
-    public ResponseEntity<SpaceDTO> createSpace(@RequestBody SpaceDTO spaceDTO) {
+    public ResponseEntity<SpaceDTO> createSpace(@RequestParam Long workspaceId, @RequestBody SpaceDTO spaceDTO) {
         Space space = new Space();
         space.setNameSpace(spaceDTO.getNameSpace());
         space.setDescription(spaceDTO.getDescription());
 
 
-        Optional<Workspace> workspaceOptional = workspaceRepository.findById(spaceDTO.getWorkspace().getId());
+        Optional<Workspace> workspaceOptional = workspaceRepository.findById(workspaceId);
 
         if (workspaceOptional.isPresent()) {
             Workspace workspace = workspaceOptional.get();
