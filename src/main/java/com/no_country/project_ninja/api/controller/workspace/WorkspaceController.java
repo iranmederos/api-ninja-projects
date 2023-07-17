@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/workspace")
-@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT})
 public class WorkspaceController {
 
     @Autowired
@@ -66,8 +65,8 @@ public class WorkspaceController {
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteWorkspace(@PathVariable Long id) {
+    @DeleteMapping
+    public ResponseEntity<Void> deleteWorkspace(@RequestParam Long id) {
         Optional<Workspace> workspaceOptional = workspaceRepository.findById(id);
 
         if (workspaceOptional.isPresent()) {
@@ -80,8 +79,8 @@ public class WorkspaceController {
         }
     }
 
-    @PostMapping("/{workspaceId}/users/{userId}")
-    public ResponseEntity<String> addUserToWorkspace(@PathVariable Long workspaceId, @PathVariable Long userId) {
+    @PostMapping("/users")
+    public ResponseEntity<String> addUserToWorkspace(@RequestParam Long workspaceId, @RequestParam Long userId) {
         Optional<Workspace> workspaceOptional = workspaceRepository.findById(workspaceId);
         Optional<User> userOptional = userRepository.findById(userId);
 
@@ -98,8 +97,8 @@ public class WorkspaceController {
         }
     }
 
-    @DeleteMapping("/{workspaceId}/users/{userId}")
-    public ResponseEntity<String> removeUserFromWorkspace(@PathVariable Long workspaceId, @PathVariable Long userId) {
+    @DeleteMapping("/users")
+    public ResponseEntity<String> removeUserFromWorkspace(@RequestParam Long workspaceId, @RequestParam Long userId) {
         Optional<Workspace> workspaceOptional = workspaceRepository.findById(workspaceId);
         Optional<User> userOptional = userRepository.findById(userId);
 
