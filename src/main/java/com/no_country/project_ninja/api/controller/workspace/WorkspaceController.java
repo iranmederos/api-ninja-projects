@@ -47,8 +47,8 @@ public class WorkspaceController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdWorkspaceDTO);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<WorkspaceDTO> updateWorkspace(@PathVariable Long id, @RequestBody WorkspaceDTO workspaceDTO) {
+    @PutMapping
+    public ResponseEntity<WorkspaceDTO> updateWorkspace(@RequestParam Long id, @RequestBody WorkspaceDTO workspaceDTO) {
         Optional<Workspace> workspaceOptional = workspaceRepository.findById(id);
 
         if (workspaceOptional.isPresent()) {
