@@ -34,7 +34,7 @@ public class TaskController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping
+    @GetMapping("/space")
     public ResponseEntity<Page<TaskDTO>> getTasksBySpace(@RequestParam Long spaceId, Pageable pageable) {
         Optional<Space> spaceOptional = spaceRepository.findById(spaceId);
 
